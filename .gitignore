@@ -9,3 +9,5 @@ buildNumber.properties
 
 .idea/workspace.xml
 .idea/deployment.xml
+.idea/libraries
+.idea/misc.xml
