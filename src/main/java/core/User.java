@@ -1,29 +1,42 @@
 package core;
 
+import javax.persistence.*;
+
 /**
  * Любой авторизованный пользователь системы
  */
+@Entity
+@Table(name = "\"user\"")
 public class User {
     /**
      * Идентификатор
      */
+    @Id
+    @GeneratedValue
     private int id;
 
     /**
      * Логин в системе
      */
+    @Column(name = "login")
     private String login;
+
     /**
      * Фамилия
      */
+    @Column
     private String surname;
+
     /**
      * Имя
      */
+    @Column
     private String name;
+
     /**
      * Отчество
      */
+    @Column
     private String middleName;
 
     /**
@@ -34,41 +47,43 @@ public class User {
     }
 
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public void setId(int idUser){
+    public void setId(int idUser) {
         id = idUser;
     }
 
-    public String getLogin(){
+    public String getLogin() {
         return login;
     }
 
-    public void setLogin(String loginUser){
+    public void setLogin(String loginUser) {
         login = loginUser;
     }
 
-    public String getSurname(){
+    public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surnameUser){
+    public void setSurname(String surnameUser) {
         surname = surnameUser;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setName(String nameUser){
+    public void setName(String nameUser) {
         name = nameUser;
     }
 
-    public String getMiddlename(){ return middleName; }
+    public String getMiddlename() {
+        return middleName;
+    }
 
-    public void setMiddlename(String middlenameUser){
+    public void setMiddlename(String middlenameUser) {
         middleName = middlenameUser;
     }
 
