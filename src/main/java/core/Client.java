@@ -17,4 +17,10 @@ public class Client extends User {
      * Банковский счёт этого пользователя
      */
     List<BankAccount> accounts = new ArrayList<BankAccount>();
+
+    List<Transactions> transactions = new ArrayList<Transactions>();
+
+
+
+
 }
