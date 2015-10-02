@@ -23,5 +23,8 @@
         <property name="connection.autocommit">true</property>
 
         <mapping resource="hibernate.xml"/>
+
+        <!-- Указываем, что хранить в БД класс "User" -->
+        <mapping class="core.User"/>
     </session-factory>
 </hibernate-configuration>
