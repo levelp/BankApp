@@ -39,6 +39,15 @@ public class User {
     @Column
     private String middleName;
 
+    public User() {
+    }
+
+    public User(String surname, String name, String middleName) {
+        this.surname = surname;
+        this.name = name;
+        this.middleName = middleName;
+    }
+
     /**
      * @return Полное имя
      */
@@ -46,6 +55,10 @@ public class User {
         return surname + " " + name + " " + middleName;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%d %s", id, fullName());
+    }
 
     public int getId() {
         return id;
