@@ -1,69 +1,92 @@
 package core;
 
 
+import javax.persistence.*;
+
 /**
  * Банковский счёт
  */
+@Entity
+@Table(name = "bank_account")
 public class BankAccount {
     /**
      * Идентификатор счёта
      */
+    @Id
+    @GeneratedValue
     private int id;
 
     /**
      * Сумма на счёте в минимальных единицах
      */
+    @Column
     private long amount;
 
     /**
      * Валюта
      */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
     private Currency currency = Currency.USD;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Client client;
+
+    @Column
     private String bankName;    // название банка
 
+    public BankAccount() {
+    }
 
-    public int getId(){
+    public BankAccount(Currency currency) {
+        this.currency = currency;
+    }
+
+
+    public int getId() {
         return id;
     }
 
-    public void setId(int idBankAccount){
+    public void setId(int idBankAccount) {
         id = idBankAccount;
     }
 
-    public long getAmount(){
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(long amountBankAccount){
+    public void setAmount(long amountBankAccount) {
         amount = amountBankAccount;
     }
 
-    public String getBankName(){
+    public String getBankName() {
         return bankName;
     }
 
-    public void setBankName(String bNameBankAccount){ bankName = bNameBankAccount; }
+    public void setBankName(String bNameBankAccount) {
+        bankName = bNameBankAccount;
+    }
 
 
-    public void creditAccount(long creditAmount){   // пополнить счет
+    public void creditAccount(long creditAmount) {   // пополнить счет
 
-//        Transactions transaction = new Transactions(...);
+//        Transaction transaction = new Transaction(...);
 
 //        amount += creditAmount;
 
     }
 
-    public void debitAccount(long debitAmount){     // списать со счета
+    public void debitAccount(long debitAmount) {     // списать со счета
 
-//        Transactions transaction = new Transactions();
+//        Transaction transaction = new Transaction();
 
 //        amount -= debitAmount;
 
 
     }
 
-    public void openAccount(){     // открыть счет
+    public void openAccount() {     // открыть счет
 
 /*
 
@@ -79,10 +102,21 @@ public class BankAccount {
 
     }
 
-    public void closeAccount(){    // закрыть счет
+    public void closeAccount() {    // закрыть счет
 
 
     }
 
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
 }

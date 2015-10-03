@@ -16,40 +16,49 @@ package core;
  *
  */
 
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
 
+@Entity
+@Table
+public class Transaction {
 
-public class Transactions {
-
+    static SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private int id;     // номер транзакции
+    private Client client;
 
     public void addFunds(long sum){     // ввод денежной суммы на счет
 
 
     }
 
-    public void withdrawFunds(long sum){     // снятие со счета денежной суммы
-
-
-
-    }
-
-    public void transfer(long sum){         // перевод денежной суммы
-
+    public void withdrawFunds(long sum) {     // снятие со счета денежной суммы
 
 
     }
 
+    public void transfer(long sum) {         // перевод денежной суммы
 
 
+    }
 
-    static SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    @Id
+    @GeneratedValue
+    public int getId() {
+        return id;
+    }
 
-    Client client = new Client();
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    public Client getClient() {
+        return client;
+    }
 
-
-
-
-
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }

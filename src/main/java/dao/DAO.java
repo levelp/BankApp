@@ -1,18 +1,67 @@
 package dao;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.io.Serializable;
 import java.util.List;
 
-public interface Dao<T, Id extends Serializable> {
-    void persist(T entity);
+public class Dao<T, Id extends Serializable> {
+    private static Session currentSession;
 
-    void update(T entity);
+    private static Transaction currentTransaction;
 
-    T findById(Id id);
+    public Session openCurrentSession() {
+        currentSession = HibernateUtil.getSessionFactory().openSession();
+        return currentSession;
+    }
 
-    void delete(T entity);
+    public Session openCurrentSessionWithTransaction() {
+        currentSession = HibernateUtil.getSessionFactory().openSession();
+        currentTransaction = currentSession.beginTransaction();
+        return currentSession;
+    }
 
-    List<T> findAll();
+    public void closeCurrentSession() {
+        currentSession.close();
+        currentSession = null;
+    }
 
-    void deleteAll();
+    public void closeCurrentSessionWithTransaction() {
+        currentTransaction.commit();
+        currentTransaction = null;
+        currentSession.close();
+        currentSession = null;
+    }
+
+    public Session getCurrentSession() {
+        if (currentSession == null)
+            currentSession = openCurrentSessionWithTransaction();
+        return currentSession;
+    }
+
+    public void persist(T entity) {
+        getCurrentSession().save(entity);
+    }
+
+    public void update(T entity) {
+        getCurrentSession().update(entity);
+    }
+
+    public T findById(Id id) {
+        throw new NotImplementedException();
+    }
+
+    public void delete(T entity) {
+        getCurrentSession().delete(entity);
+    }
+
+    public List<T> findAll() {
+        throw new NotImplementedException();
+    }
+
+    public void deleteAll() {
+        findAll().forEach(this::delete);
+    }
 }

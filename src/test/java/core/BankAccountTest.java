@@ -12,7 +12,7 @@ public class BankAccountTest extends Assert{
 
         BankAccount account = new BankAccount();
 
-        Transactions tranaction = new Transactions();
+        Transaction tranaction = new Transaction();
 
         client.accounts.add(account);
 

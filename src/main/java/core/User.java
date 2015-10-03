@@ -7,6 +7,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "\"user\"")
+@DiscriminatorColumn(
+        name = "subclass", // dtype
+        discriminatorType = DiscriminatorType.STRING
+)
 public class User {
     /**
      * Идентификатор

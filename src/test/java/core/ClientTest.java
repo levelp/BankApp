@@ -16,7 +16,7 @@ public class ClientTest extends Assert {
         BankAccount account = new BankAccount();
         client.accounts.add(account);
 
-        Transactions transaction = new Transactions();
+        Transaction transaction = new Transaction();
         client.transactions.add(transaction);
 
 

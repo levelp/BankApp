@@ -1,7 +1,9 @@
 package hibernate;
 
-import core.User;
+import core.*;
+import dao.Dao;
 import dao.HibernateUtil;
+import dao.UserDao;
 import dao.UserService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -65,5 +67,101 @@ public class HibernateDemo extends Assert {
         service.deleteAll();
 
         assertEquals("Их не должно было остаться", 0, service.findAll().size());
+    }
+
+
+    @Test
+    public void testClientService() {
+        UserDao service = new UserDao();
+        service.openCurrentSessionWithTransaction();
+
+        User user1 = new User("Иванов", "Иван", "Иванович");
+        User user2 = new User("Петров", "Пётр", "Петрович");
+        User user3 = new User("Сидоров", "Сидор", "Сидорович");
+        System.out.println("*** Добавление пользователей в БД ***");
+        service.persist(user1);
+        service.persist(user2);
+        service.persist(user3);
+
+        Dao<Address, Integer> addressDao = new Dao<Address, Integer>();
+        Client client = new Client();
+        Address address = new Address();
+        address.setCity("111");
+        address.setHouse("111");
+        address.setIndex(194124);
+        addressDao.persist(address);
+        client.setAddress(address);
+        service.persist(client);
+
+        client.addTransaction(new Transaction());
+
+        service.closeCurrentSessionWithTransaction();
+    }
+
+    /**
+     * Работа со связанными таблицами:
+     * - обращение к полю
+     * - сложные запросы
+     */
+    @Test
+    public void testComplexQuery() {
+        UserDao userDao = new UserDao();
+        userDao.openCurrentSessionWithTransaction();
+        Session session = userDao.getCurrentSession();
+
+        Currency currency = new Currency();
+        currency.setId("RUR");
+        currency.setName("руб.");
+        session.save(currency);
+
+        Dao<Address, Integer> addressDao = new Dao<Address, Integer>();
+        Client client = new Client();
+        Address address = new Address();
+        address.setCity("111");
+        address.setHouse("111");
+        address.setIndex(194124);
+        addressDao.persist(address);
+        client.setAddress(address);
+
+        BankAccount account = new BankAccount(currency);
+        client.addAccount(account);
+
+        session.save(client);
+
+        int id = 82; //account.getId();
+        System.out.println("id = " + id);
+
+        BankAccount sameAccount = (BankAccount) session.get(BankAccount.class, id);
+        System.out.println("sameAccount.getCurrency().getName() = " + sameAccount.getCurrency().getName());
+
+        userDao.closeCurrentSessionWithTransaction();
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void test() {
+        UserDao userDao = new UserDao();
+        userDao.openCurrentSessionWithTransaction();
+        Session session = userDao.getCurrentSession();
+
+        int id = 82; //account.getId();
+        System.out.println("id = " + id);
+
+        BankAccount sameAccount = (BankAccount) session.get(BankAccount.class, id);
+
+        System.out.println("sameAccount.getId() = " + sameAccount.getId());
+        System.out.println("До загрузки валюты");
+        Currency currency = sameAccount.getCurrency();
+        String name = currency.getName();
+        System.out.println("После загрузки валюты");
+        System.out.println("sameAccount.getCurrency().getName() = " + name);
+
+        //session.createQuery("SELECT Currency c FROM Currency JOIN ON ")
+        sameAccount.getClient();
+
+        userDao.closeCurrentSessionWithTransaction();
+
     }
 }

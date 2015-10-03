@@ -1,9 +1,15 @@
 package core;
 
+import javax.persistence.*;
+
 /**
  * Адрес клиента/сотрудника
  */
+@Entity
+@Table
 public class Address {
+    private int id;
+
     /**
      * Город
      */
@@ -25,7 +31,7 @@ public class Address {
      */
     private int index;
 
-
+    @Column(length = 100)
     public String getCity() {
         return city;
     }
@@ -34,6 +40,7 @@ public class Address {
         city = cityAddress;
     }
 
+    @Column
     public String getStreet() {
         return street;
     }
@@ -42,6 +49,7 @@ public class Address {
         street = streetAddress;
     }
 
+    @Column
     public String getHouse() {
         return house;
     }
@@ -50,6 +58,7 @@ public class Address {
         house = houseAddress;
     }
 
+    @Column
     public String getApt() {
         return apt;
     }
@@ -58,12 +67,23 @@ public class Address {
         apt = aptAddress;
     }
 
+    @Column
     public int getIndex() {
         return index;
     }
 
     public void setIndex(int indexAddress) {
         index = indexAddress;
+    }
+
+    @Id
+    @GeneratedValue
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

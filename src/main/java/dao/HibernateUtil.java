@@ -22,14 +22,17 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory(final String... packagesToScan) {
         try {
             Configuration configuration = new Configuration();
+            configuration.configure();
+
             for (String packageToScan : packagesToScan) {
                 getEntityClasses(packageToScan).stream().forEach(configuration::addAnnotatedClass);
             }
-            return configuration.configure()
-                    .buildSessionFactory(
-                            new StandardServiceRegistryBuilder()
-                                    .applySettings(configuration.getProperties())
-                                    .build());
+            System.out.println("hibernate.connection.username = " + configuration.getProperties().getProperty("hibernate.connection.username"));
+            System.out.println("hibernate.connection.password = " + configuration.getProperties().getProperty("hibernate.connection.password"));
+            return configuration.buildSessionFactory(
+                    new StandardServiceRegistryBuilder()
+                            .applySettings(configuration.getProperties())
+                            .build());
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
