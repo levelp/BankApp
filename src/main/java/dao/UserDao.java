@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 // DAO - Data Access Object
-public class UserDao<T> extends Dao<User, Integer> {
+public class UserDao<T> extends DAO<User, Integer> {
     public User findById(Integer id) {
         return (User) getCurrentSession().get(User.class, id);
     }

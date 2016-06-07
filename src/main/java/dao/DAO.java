@@ -7,7 +7,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.io.Serializable;
 import java.util.List;
 
-public class Dao<T, Id extends Serializable> {
+public class DAO<T, Id extends Serializable> {
     private static Session currentSession;
 
     private static Transaction currentTransaction;

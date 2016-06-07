@@ -1,7 +1,7 @@
 package hibernate;
 
 import core.*;
-import dao.Dao;
+import dao.DAO;
 import dao.HibernateUtil;
 import dao.UserDao;
 import dao.UserService;
@@ -83,7 +83,7 @@ public class HibernateDemo extends Assert {
         service.persist(user2);
         service.persist(user3);
 
-        Dao<Address, Integer> addressDao = new Dao<Address, Integer>();
+        DAO<Address, Integer> addressDao = new DAO<Address, Integer>();
         Client client = new Client();
         Address address = new Address();
         address.setCity("111");
@@ -114,7 +114,7 @@ public class HibernateDemo extends Assert {
         currency.setName("руб.");
         session.save(currency);
 
-        Dao<Address, Integer> addressDao = new Dao<Address, Integer>();
+        DAO<Address, Integer> addressDao = new DAO<Address, Integer>();
         Client client = new Client();
         Address address = new Address();
         address.setCity("111");

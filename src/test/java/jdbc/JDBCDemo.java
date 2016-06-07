@@ -12,7 +12,7 @@ public class JDBCDemo {
     @Test
     public void testConnection() throws SQLException {
         // Создаём соединение с БД
-        String jdbc = "jdbc:postgresql://localhost:5433/bankapp";
+        String jdbc = "jdbc:postgresql://localhost:5432/bankapp";
         try (Connection con = DriverManager.getConnection(jdbc,
                 "postgres", "123")) {
             Statement s = con.createStatement();
